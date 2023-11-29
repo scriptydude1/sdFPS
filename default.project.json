@@ -1,0 +1,19 @@
+{
+  "name": "sdFPS_v1",
+  "tree": {
+    "$className": "DataModel",
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "sdFPS": {
+          "$path": "src/player"
+        }
+      },
+      "StarterCharacterScripts": {
+        "sdFPS": {
+          "$path": "src/character"
+        }
+      }
+    }
+  }
+}
