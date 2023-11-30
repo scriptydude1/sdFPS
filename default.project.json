@@ -12,8 +12,13 @@
       "StarterCharacterScripts": {
         "sdFPS": {
           "$path": "src/character"
-        }
+        },
+        "ServerScriptService": {
+          "sdFPS": {
+            "$path": "src/server"
+          }
       }
     }
   }
+}
 }
