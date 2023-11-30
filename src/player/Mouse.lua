@@ -10,7 +10,7 @@ local Preferences = require(script.Parent:WaitForChild("Preferences"))
 ]]
 local mouse = {}
 
-mouse.Locked = false
+mouse.Locked = true
 
 local leftMouseButton = Instance.new("BindableEvent")
 local rightMouseButton = Instance.new("BindableEvent")
