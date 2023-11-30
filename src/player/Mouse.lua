@@ -28,9 +28,8 @@ end
 --Movement of a mouse last frame. Takes users sensetivity preference in the calculation.
 function mouse.getDelta()
     local delta = UserInputService:GetMouseDelta()
-    local sensetivity = Preferences.Sensetivity / 100
+    local sensetivity = Preferences.Mouse.Sensetivity / 100
 
     return Vector2.new(delta.X * sensetivity, delta.Y * sensetivity)
 end
-
 return mouse

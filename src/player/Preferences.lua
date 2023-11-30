@@ -4,7 +4,13 @@
 ]]
 local pref = {}
 
-pref.Sensetivity = 1
-pref.FOV = 90
+pref.Mouse = {
+    ["Sensetivity"] = 1,
+    ["RawInput"] = false
+}
+
+pref.Camera = {
+    ["FOV"] = 90
+}
 
 return pref
