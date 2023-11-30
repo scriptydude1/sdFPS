@@ -21,5 +21,7 @@ cam.RenderStep = cam._renderevent.Event
 function cam.setCFrame(cframe)
     workspace.CurrentCamera.CFrame = cframe
 end
-
+function cam.getCFrame()
+    return workspace.CurrentCamera.CFrame
+end
 return cam
