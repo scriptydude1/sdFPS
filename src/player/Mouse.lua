@@ -17,6 +17,15 @@ local rightMouseButton = Instance.new("BindableEvent")
 mouse.LeftMouseButton = leftMouseButton.Event
 mouse.RightMouseButton = rightMouseButton.Event
 
+UserInputService.InputBegan:Connect(function(input, processed)
+    if processed then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        leftMouseButton:Fire()
+    elseif input.UserInputType == Enum.UserInputType.MouseButton2 then
+        rightMouseButton:Fire()
+    end
+end)
+
 --UserInputService:GetMouseLocation()
 function mouse.getPosition()
     return UserInputService:GetMouseLocation()

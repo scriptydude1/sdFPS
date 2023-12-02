@@ -11,6 +11,7 @@ RunService:BindToRenderStep("sdfps_camera", Enum.RenderPriority.Camera.Value + 1
         Camera.applyPrefs(Preferences.Camera)
         workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
     else
+        workspace.CurrentCamera.CameraType = Enum.CameraType.Fixed
         Camera.applyPrefs(defaultPref)
     end
     Camera._renderevent:Fire()
