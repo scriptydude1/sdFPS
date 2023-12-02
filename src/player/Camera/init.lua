@@ -24,4 +24,9 @@ end
 function cam.getCFrame()
     return workspace.CurrentCamera.CFrame
 end
+
+--applies settings from Preferences.Camera
+function cam.applyPrefs(prefCamera)
+    workspace.CurrentCamera.FieldOfView = prefCamera.FOV
+end
 return cam
