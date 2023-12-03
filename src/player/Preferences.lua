@@ -10,7 +10,8 @@ pref.Mouse = {
 }
 
 pref.Camera = {
-    ["FOV"] = 90
+    ["FOV"] = 90,
+    ["FP_UseHeadHeight"] = true
 }
 
 return pref
