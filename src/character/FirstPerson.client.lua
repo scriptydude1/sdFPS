@@ -33,6 +33,7 @@ end
 Camera.RenderStep:Connect(function()
     if Camera.CameraType == Camera.CustomCameraType[scriptCameraType]  then
         hideCharacter = true
+        Mouse.Locked = true
 
         --evil code. Basically if rawinput = false then smooth out mouse with Lerp
         local mouseDelta = Preferences.Mouse.RawInput
@@ -49,7 +50,7 @@ Camera.RenderStep:Connect(function()
         lastMouseDelta = Vector2.new(mouseDelta.X, math.clamp(mouseDelta.Y, -1.5, 1.5))
 
         local updatedCameraCf = CFrame.new(HRP.Position, Vector3.new(cameraCf.LookVector.X * MAX_LOOK_LENGTH, positionCf.Y + CFRAME_EYELEVEL, cameraCf.LookVector.Z * MAX_LOOK_LENGTH))
-        HRP.CFrame = updatedCameraCf
+        HRP.CFrame = HRP.CFrame:Lerp(updatedCameraCf, 0.83)
     else
         hideCharacter = false
     end
