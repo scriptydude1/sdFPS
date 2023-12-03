@@ -7,9 +7,11 @@ local HRP = character:WaitForChild("HumanoidRootPart")
 
 local plrScripts =  player.PlayerScripts:WaitForChild("sdFPS")
 local Camera, Mouse = require(plrScripts.Camera), require(plrScripts.Mouse)
+local Preferences = require(plrScripts.Preferences)
 
 local CFRAME_EYELEVEL = 1.75
 local MAX_LOOK_LENGTH = 900000
+local LERP_ALPHA = 0.55
 local lastMouseDelta = Vector2.new()
 
 local hideCharacter = true
@@ -24,7 +26,11 @@ end
 Camera.RenderStep:Connect(function()
     if Camera.CameraType == Camera.CustomCameraType[scriptCameraType]  then
         hideCharacter = true
-        local mouseDelta = Mouse.getDelta() + lastMouseDelta
+
+        --evil code. Basically if rawinput = false then smooth out mouse with Lerp
+        local mouseDelta = Preferences.Mouse.RawInput
+        and Mouse:getDelta() + lastMouseDelta or lastMouseDelta:Lerp(Mouse:getDelta() + lastMouseDelta, LERP_ALPHA)
+
         local positionCf = Vector3.new(HRP.CFrame.X, HRP.CFrame.Y + CFRAME_EYELEVEL, HRP.CFrame.Z)
 
         local cameraCf = mouseDelta == Vector2.zero 
@@ -32,7 +38,6 @@ Camera.RenderStep:Connect(function()
 
         Camera.setCFrame(cameraCf)
         lastMouseDelta = Vector2.new(mouseDelta.X, math.clamp(mouseDelta.Y, -1.5, 1.5))
-        print(lastMouseDelta)
 
         local updatedCameraCf = CFrame.new(HRP.Position, Vector3.new(cameraCf.LookVector.X * MAX_LOOK_LENGTH, positionCf.Y + CFRAME_EYELEVEL, cameraCf.LookVector.Z * MAX_LOOK_LENGTH))
         HRP.CFrame = updatedCameraCf
