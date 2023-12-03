@@ -60,7 +60,6 @@ end)
 
 --for debugging purposes
 Mouse.LeftMouseButton:Connect(function()
-    print("haiii")
     if Camera.CameraType == Camera.CustomCameraType.FirstPerson then
         Camera.CameraType = Camera.CustomCameraType.None
     else
