@@ -1,6 +1,7 @@
 local scriptCameraType = "FirstPerson"
 
 local player = game:GetService("Players").LocalPlayer
+local RunService = game:GetService("RunService")
 local character = player.Character or player.CharacterAdded:Wait()
 local HRP = character:WaitForChild("HumanoidRootPart")
 
@@ -11,9 +12,7 @@ local CFRAME_EYELEVEL = 1.75
 local MAX_LOOK_LENGTH = 900000
 local lastMouseDelta = Vector2.new()
 
---parts that's hidden when player is in the firstperson mode
-local hiddenCharacterParts = {}
-local filledHiddenParts = false
+local hideCharacter = true
 
 local function vectorToCf(mouseDelta, offset)
     local pitch = CFrame.Angles(-math.clamp(mouseDelta.Y, -math.pi/3, math.pi/2.5), 0, 0)
@@ -22,42 +21,9 @@ local function vectorToCf(mouseDelta, offset)
     return CFrame.new(offset) * yaw * pitch
 end
 
-local function proccessHidden()
-    if filledHiddenParts then return end
-    for i, part in pairs(character:GetChildren()) do
-        if part:IsA("BasePart") or part:IsA("Accessory") then
-
-            if part:IsA("Accessory") then
-                part = part:FindFirstChild("Handle")
-            end
-            if not part then continue end
-
-            if part.Transparency ~= 1 then
-                part.Transparency = 1
-                table.insert(hiddenCharacterParts, part)
-            end
-        end
-    end
-
-    filledHiddenParts = true
-end
-local function clearHidden()
-    if not filledHiddenParts then return end
-
-    for i, part in pairs(hiddenCharacterParts) do
-        if part then
-            part.Transparency = 0
-            table.remove(hiddenCharacterParts, i)
-        end
-    end
-
-    filledHiddenParts = false
-end
-
-
 Camera.RenderStep:Connect(function()
     if Camera.CameraType == Camera.CustomCameraType[scriptCameraType]  then
-        proccessHidden()
+        hideCharacter = true
         local mouseDelta = Mouse.getDelta() + lastMouseDelta
         local positionCf = Vector3.new(HRP.CFrame.X, HRP.CFrame.Y + CFRAME_EYELEVEL, HRP.CFrame.Z)
 
@@ -69,9 +35,21 @@ Camera.RenderStep:Connect(function()
         print(lastMouseDelta)
 
         local updatedCameraCf = CFrame.new(HRP.Position, Vector3.new(cameraCf.LookVector.X * MAX_LOOK_LENGTH, positionCf.Y + CFRAME_EYELEVEL, cameraCf.LookVector.Z * MAX_LOOK_LENGTH))
-        HRP.CFrame = updatedCameraCf 
+        HRP.CFrame = updatedCameraCf
     else
-        clearHidden()
+        hideCharacter = false
+    end
+end)
+
+RunService:BindToRenderStep("sdfps_firstperson_hidechar", Enum.RenderPriority.Character.Value - 5, function()
+    for i,part in pairs(character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            if hideCharacter then
+                part.LocalTransparencyModifier = 1
+            else
+                part.LocalTransparencyModifier = 0
+            end
+        end
     end
 end)
 
