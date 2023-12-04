@@ -15,3 +15,5 @@ Simple collection of modules that tries to transform ROBLOX into a more bearable
 * *Mouse (src/player/Mouse.lua)* - This handles client mouse. Move delta, LMB and RMB detection, Wheel scroll detection (TODO).
 * *Preferences (src/player/Preferences.lua)* - Stores client preferences, such as mouse sensetivity or camera's FOV. TODO save and load preferences from server.
 
+AND OTHER THINGS COMING SOON!!
+
